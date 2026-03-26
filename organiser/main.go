@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "organiser/scanner"
 
 func main() {
-    fmt.Println("Hello world!")
+    scanner.Scan()
 }
