@@ -15,14 +15,14 @@ func GetDirectory(pathFlag string, input string) (string, error) {
 
 	input = strings.TrimSpace(input)
 	if input == "" {
-		return "", fmt.Errorf("no directory provided")
+		return "", fmt.Errorf("No directory provided")
 	}
 
 	return input, nil
 }
 
 
-func Scan() {
+func Scan() (string, error) {
 	pathFlag := flag.String("path", "", "Directory to organize")
 	flag.Parse()
 
@@ -37,9 +37,9 @@ func Scan() {
 
 	dir, err := GetDirectory(*pathFlag, input)
 	if err != nil {
-		fmt.Println("No directory provided. Exiting.")
-		return
+		return "", err  
 	}
 
 	fmt.Println("Working on directory:", dir)
+	return dir, nil 
 }

@@ -1,7 +1,17 @@
 package main
 
-import "organiser/scanner"
+import (
+    "organiser/scanner"
+    "fmt"
+)
 
 func main() {
-    scanner.Scan()
+    dir, err := scanner.Scan()
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    
+    fmt.Println("Stored directory:", dir)
+
 }
