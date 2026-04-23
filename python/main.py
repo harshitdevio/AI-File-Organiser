@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from schemas import FileRequest, BatchFileRequest
-from classifier import classify_file
+from schemas import FileRequest, BatchFileRequest, FolderBatchRequest
+from classifier import classify_file, process_batch
 
 app = FastAPI()
 
@@ -29,3 +29,10 @@ async def detect_topics_batch(request: BatchFileRequest):
         "results": results
     }
 
+@app.post("/process-unit-2")
+async def process_unit_2(request: FolderBatchRequest):
+    results = process_batch(request.filepaths)
+    return {
+        "count": len(results),
+        "results": results
+    }

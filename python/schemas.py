@@ -8,3 +8,11 @@ class FileRequest(BaseModel):
 
 class BatchFileRequest(BaseModel):
     files: List[FileRequest]
+
+class FolderBatchRequest(BaseModel):
+    filepaths: List[str] 
+class ClassificationResult(BaseModel):
+    filepath: str
+    top_topic: Optional[str]
+    confidence: Optional[float]
+    error: Optional[str] = None
