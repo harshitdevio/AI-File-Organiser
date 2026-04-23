@@ -2,6 +2,7 @@ import os
 from transformers import pipeline
 from typing import List, Dict, Optional
 from file_utils import read_file_content
+from config import TARGET_TOPICS
 
 # Initialize model once (Singleton-ish pattern)
 print("Loading BART model... please wait.")
@@ -54,3 +55,10 @@ def classify_file(
             "confidence": None,
             "mime_type": mime_type
         }
+    
+def process_batch(filepaths: List[str]) -> List[Dict]:
+    results = []
+    for path in filepaths:
+        result = classify_file(path, TARGET_TOPICS)
+        results.append(result)
+    return results
