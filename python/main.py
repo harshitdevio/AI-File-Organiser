@@ -1,7 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from schemas import FileRequest, BatchFileRequest, FolderBatchRequest
 from classifier import classify_file, process_batch
+from typing import List
 from config import TARGET_TOPICS
+from client import send_results_to_service
 
 app = FastAPI()
 
@@ -38,3 +40,10 @@ async def process_unit_2(request: FolderBatchRequest):
         "count": len(results),
         "results": results
     }
+
+@app.post("/classify-and-sync")
+async def run_pipeline(paths: List[str]):
+    final_results = process_batch(paths) 
+    
+    status = await send_results_to_service(final_results)
+    return {"sent": len(final_results), "remote_status": status}
