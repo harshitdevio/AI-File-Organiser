@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from schemas import FileRequest, BatchFileRequest, FolderBatchRequest
 from classifier import classify_file, process_batch
+from config import TARGET_TOPICS
 
 app = FastAPI()
 
@@ -10,7 +11,8 @@ async def health():
 
 @app.post("/detect-topic")
 async def detect_topic(request: FileRequest):
-    result = classify_file(request.filepath, request.topics, request.mime_type)
+    topics = request.topics if request.topics else TARGET_TOPICS
+    result = classify_file(request.filepath, topics, request.mime_type)
     if result.get("error"):
         raise HTTPException(status_code=400, detail=result["error"])
     return result
@@ -18,7 +20,7 @@ async def detect_topic(request: FileRequest):
 @app.post("/detect-topics-batch")
 async def detect_topics_batch(request: BatchFileRequest):
     results = [
-        classify_file(f.filepath, f.topics, f.mime_type) 
+        classify_file(f.filepath, f.topics if f.topics else TARGET_TOPICS, f.mime_type) 
         for f in request.files
     ]
     

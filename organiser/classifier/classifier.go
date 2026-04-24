@@ -9,8 +9,8 @@ import (
 )
 
 type FileInfo struct {
-    Path     string
-    MIMEType string
+    FilePath  string `json:"filepath"`
+    MIMEType  string `json:"mime_type"`
 }
 
 func ProcessDirectory(dirPath string) ([]FileInfo, error) {
@@ -34,12 +34,12 @@ func ProcessDirectory(dirPath string) ([]FileInfo, error) {
             fmt.Fprintf(os.Stderr, "Error detecting MIME for %s: %v\n", path, err)
             return nil
         }
-
+ 
         files = append(files, FileInfo{
-            Path:     path,
-            MIMEType: mtype.String(),
+            FilePath:  path,
+            MIMEType:  mtype.String(),
         })
-
+ 
         return nil
     })
 

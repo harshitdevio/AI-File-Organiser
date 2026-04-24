@@ -3,7 +3,7 @@ from typing import List, Optional
 
 class FileRequest(BaseModel):
     filepath: str
-    topics: List[str]
+    topics: Optional[List[str]] = None
     mime_type: Optional[str] = None
 
 class BatchFileRequest(BaseModel):
