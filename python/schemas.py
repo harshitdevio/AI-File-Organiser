@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 class FileRequest(BaseModel):
     filepath: str
@@ -13,6 +13,8 @@ class FolderBatchRequest(BaseModel):
     filepaths: List[str] 
 class ClassificationResult(BaseModel):
     filepath: str
-    top_topic: Optional[str]
-    confidence: Optional[float]
+    top_topic: Optional[str] = None
+    confidence: Optional[float] = None
+    all_scores: Optional[Dict[str, float]] = None
+    mime_type: Optional[str] = None
     error: Optional[str] = None

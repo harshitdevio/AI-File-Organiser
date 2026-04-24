@@ -3,6 +3,7 @@ from schemas import FileRequest, BatchFileRequest, FolderBatchRequest
 from classifier import classify_file, process_batch
 from typing import List
 from config import TARGET_TOPICS
+from fastapi.concurrency import run_in_threadpool
 from client import send_results_to_service
 
 app = FastAPI()
@@ -43,7 +44,11 @@ async def process_unit_2(request: FolderBatchRequest):
 
 @app.post("/classify-and-sync")
 async def run_pipeline(paths: List[str]):
-    final_results = process_batch(paths) 
-    
+    final_results = await run_in_threadpool(process_batch, paths) 
     status = await send_results_to_service(final_results)
-    return {"sent": len(final_results), "remote_status": status}
+    
+    return {
+        "files_processed": len(final_results), 
+        "remote_status": status,
+        "results": final_results 
+    }
