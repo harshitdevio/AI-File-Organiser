@@ -54,9 +54,13 @@ The services interact through a synchronous REST-based bridge designed for resil
 ---
 
 ## 🛠 Tech Stack
-* **Go:** CLI, Concurrency, File I/O, IPC.
-* **Python:** FastAPI, PyTorch, Hugging Face Transformers.
-* **Data Handling:** PyPDF2, Mimetype.
+
+| Component | Technology |
+| :--- | :--- |
+| **Languages** | Golang, Python 3.10+ |
+| **AI Framework** | BART-large-mnli, Hugging Face Transformers, PyTorch |
+| **Backend** | FastAPI (Python), Standard Library (Go) |
+| **Reliability** | Docker, Redis (Optional for scaling), Goroutines |
 
 ---
 
