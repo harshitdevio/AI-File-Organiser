@@ -1,0 +1,10 @@
+services:
+  organiser:
+    build: ./organiser
+    ports:
+      - "8080:8080"
+
+  LLM:
+    build: ./python
+    ports:
+      - "8000:8000"
